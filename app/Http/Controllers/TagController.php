@@ -3,25 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class TagController extends Controller
 {
-    public function store(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    /**
+     * @param Request $request
+     *
+     * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+     */
+    public function store(Request $request): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         $request->validate([
            'name' => 'required|string|max:65'
         ]);
 
-        Tag::create($request->all());
+        try{
+            Tag::create($request->all());
+
+        }catch (QueryException $e){
+            return back()->with('error', 'Crear un nuevo tag no fue posible');
+        }
+
 
         return redirect('/');
     }
 
-    public function destroy(Tag $tag): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    /**
+     * @param Tag $tag
+     *
+     * @return Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
+     */
+    public function destroy(Tag $tag): Application|Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
-        $tag->delete();
+        $wasDeleted = $tag->delete();
 
-        return redirect('/');
+        if($wasDeleted){
+            return redirect('/');
+        }else{
+            return back()->with('error', 'Eliminar el tag no fue posible');
+        }
     }
 }

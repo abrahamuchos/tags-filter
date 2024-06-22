@@ -3,7 +3,9 @@
 namespace Feature\Http\Controllers;
 
 use App\Models\Tag;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Exceptions;
 use Tests\TestCase;
 
 class TagControllerTest extends TestCase
