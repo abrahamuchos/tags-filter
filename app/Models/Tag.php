@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 
 /**
  *
@@ -30,4 +31,10 @@ class Tag extends Model
     protected $fillable =[
         'name'
     ];
+
+    public function getSlugAttribute(): string
+    {
+//        return Str::slug($this->name);
+        return strtolower( str_replace(' ', '-', $this->name));
+    }
 }
