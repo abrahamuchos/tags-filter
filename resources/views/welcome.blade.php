@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @vite('resources/css/app.css')
-    <title>Laravel</title>
+    <title>Tags with Laravel</title>
 </head>
 <body class="bg-gray-200 py-10">
 
@@ -43,5 +43,11 @@
 
 </div>
 
+<footer class="mt-10 text-center text-slate-600">
+    <small>
+        {{now()->year." For educational purposes only. "}}
+        <a href="https://github.com/abrahamuchos" class="underline">Abrahamuchos</a>
+    </small>
+</footer>
 </body>
 </html>
